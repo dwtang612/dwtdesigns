@@ -1,17 +1,18 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home'; // Adjusted import for Home component
-import Portfolio from './Portfolio'; // Adjusted import for Portfolio component
-import Contact from './Contact'; // Adjusted import for Contact component
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './Home';
+import Portfolio from './Portfolio';
+import Contact from './Contact';
+import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div>
         <nav>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/portfolio">Portfolio</a></li>
-            <li><a href="/contact">Contact</a></li>
+          <ul className="navbar">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/portfolio">Portfolio</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
           </ul>
         </nav>
         <Routes>
@@ -23,6 +24,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;

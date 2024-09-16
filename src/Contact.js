@@ -5,42 +5,44 @@ function Contact() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple form validation
     if (!name || !email || !message) {
       setError('All fields are required.');
       return;
     }
 
-    // Regular expression for basic email validation
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailPattern.test(email)) {
       setError('Please enter a valid email.');
       return;
     }
 
-    const formData = { name, email, message };
+    try {
+      const response = await fetch('/api/send-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
 
-    // Sending form data to a backend endpoint
-    const response = await fetch('api/send-message', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      alert('Message sent successfully!');
-      setName('');
-      setEmail('');
-      setMessage('');
-      setError('');
-    } else {
-      setError('Failed to send the message. Please try again later.');
+      if (response.ok) {
+        const data = await response.json();
+        setSuccess(data.message);  // Use the message from the backend's response
+        setName('');  // Clear the form fields
+        setEmail('');
+        setMessage('');
+        setError('');  // Clear any error message
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Failed to send the message.');  // Handle server error
+      }
+    } catch (error) {
+      setError('An error occurred while sending the message.');
     }
   };
 
@@ -48,6 +50,7 @@ function Contact() {
     <div>
       <h2>Contact Us</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
