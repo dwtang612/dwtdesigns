@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -76,7 +77,8 @@ label {
   font-weight: bold;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 8px;
   margin-top: 4px;
@@ -100,4 +102,90 @@ button:hover {
 .error {
   color: red;
   margin-bottom: 10px;
+}
+
+/* Styling the navigation bar */
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  /* Dark background */
+}
+
+.navbar li {
+  float: left;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  background-color: #111;
+  /* Darker color on hover */
+}
+
+/* Add responsiveness */
+@media screen and (max-width: 600px) {
+  .navbar li {
+    float: none;
+  }
+}
+
+/* Layout grid for main content */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 equal columns */
+  gap: 20px;
+  padding: 20px;
+}
+
+.grid-item {
+  background-color: #f4f4f4;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.container {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  /* Ensures the content is not too wide */
+}
+
+section {
+  margin-bottom: 40px;
+  /* Adds spacing between sections */
 }
