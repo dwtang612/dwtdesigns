@@ -10,7 +10,7 @@ function App() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
+  //------------------------------------------------------------------------------HTML SECTION------------------------------------------------------------------------------
   return (
     <Router>
       <div className="content-wrapper">

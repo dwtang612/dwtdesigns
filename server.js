@@ -1,52 +1,48 @@
+// Import necessary AWS SDK v3 modules
+const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
 const express = require('express');
-const path = require('path');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const mailgun = require('mailgun-js');
 
 // Load environment variables
 dotenv.config();
 
-// Initialize express
+// Initialize Express
 const app = express();
-
-// Mailgun configuration
-const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN });
-
 const PORT = process.env.PORT || 5000;
 
-// Middleware to parse JSON (for API requests)
-app.use(express.json());
+app.use(bodyParser.json());
 
-// API route to send email
-app.post('/api/send-message', (req, res) => {
+// Configure SES client
+const sesClient = new SESClient({ region: 'us-east-1' }); // Replace with your AWS region
+
+// Route to handle email sending
+app.post('/api/send-message', async (req, res) => {
     const { name, email, message } = req.body;
 
-    const data = {
-        from: email, // Sender's email from the form
-        to: 'your-email@example.com', // Recipient email (your own)
-        subject: `New message from ${name}`,
-        text: message,
+    const params = {
+        Destination: {
+            ToAddresses: ['dfwtdesigns@gmail.com'],  // Recipient email
+        },
+        Message: {
+            Body: {
+                Text: { Data: message },  // Email message body
+            },
+            Subject: { Data: `New Contact Message from ${name}` },  // Email subject
+        },
+        Source: 'your-verified-email@example.com',  // Your verified SES email
     };
 
-    // Send the email using Mailgun
-    mg.messages().send(data, (error, body) => {
-        if (error) {
-            console.error('Mailgun error:', error);
-            res.status(500).json({ success: false, message: 'Failed to send the email.' });
-        } else {
-            res.status(200).json({ success: true, message: 'Email sent successfully!' });
-        }
-    });
+    try {
+        const command = new SendEmailCommand(params);
+        const data = await sesClient.send(command);
+        console.log('Email sent:', data);
+        res.status(200).json({ success: true, message: 'Email sent successfully!' });
+    } catch (err) {
+        console.error('Error sending email:', err);
+        res.status(500).json({ success: false, message: 'Failed to send email.' });
+    }
 });
-
-// Serve the React app (for production)
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    });
-}
 
 // Start the server
 app.listen(PORT, () => {
