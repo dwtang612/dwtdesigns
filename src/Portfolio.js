@@ -26,7 +26,7 @@ function Portfolio() {
       title: 'Project 3',
       description: 'A mobile app development project focused on UX.',
       details: 'Detailed description of Project 2.',
-      link: 'https://example.com/project2',
+      link: 'https://example.com/project3',
       image: 'https://via.placeholder.com/300'
     },
   ];

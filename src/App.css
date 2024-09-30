@@ -189,7 +189,7 @@ footer {
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
-  text-align: center;
+  text-align: left;
 }
 
 .modal-content h2 {
@@ -204,6 +204,10 @@ footer {
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  float: right;
+  display: flex;
+  justify-content: flex-end;
+  /* This will align the button to the right */
 }
 
 .modal-content button:hover {
@@ -235,50 +239,48 @@ button:active {
 }
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
-/* Contact Form Styles */
-.contact-form {
+/* Contact page specific styles */
+.contact-container {
+  padding: 40px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
   max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
-.contact-form label {
-  display: block;
-  margin-bottom: 8px;
+.contact-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* Error styles */
-.error-input {
-  border-color: red;
-}
-
-.error-text {
-  color: red;
-  font-size: 12px;
-  margin-top: -8px;
+.contact-container p {
+  font-size: 1.2rem;
   margin-bottom: 10px;
 }
 
-/* Button styling */
-.contact-form button {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+.contact-container a {
+  font-size: 1.5rem;
+  color: #007bff;
+  text-decoration: none;
 }
 
-.contact-form button:hover {
-  background-color: #45a049;
+.contact-container a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 20px;
+  }
+
+  .contact-container h2 {
+    font-size: 2rem;
+  }
+
+  .contact-container a {
+    font-size: 1.2rem;
+  }
 }
